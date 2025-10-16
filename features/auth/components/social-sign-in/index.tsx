@@ -1,71 +1,67 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Box, Typography, Alert, Divider, Button, Link } from "@mui/material";
-import { useSocialAuth } from "./use-social-auth";
+import { Box, Typography, Divider, Button, Link, Stack } from "@mui/material";
+import { useSocialAuth } from "./social-sign-in.hook";
 import { IconFacebook, IconGoogle } from "@/components/icons";
 
 export function SocialSignIn() {
   const t = useTranslations();
-  const { 
-    signInWithGoogle, 
-    signInWithFacebook, 
-    isLoading, 
-    error 
+  const {
+    signInWithGoogle,
+    signInWithFacebook,
+    isLoading,
+    error
   } = useSocialAuth();
 
   return (
-    <Box className="space-y-4">
-      {/* Divider */}
-      <Box className="flex items-center gap-4">
-        <Divider className="flex-1" />
-        <Typography color="textSecondary" className="px-2">
-          {t("or")}
-        </Typography>
-        <Divider className="flex-1" />
-      </Box>
+    <Box>
+      <Stack spacing={3}>
+        {/* Divider */}
+        <Box display="flex" alignItems="center" gap={2}>
+          <Divider sx={{ flex: 1 }} />
+          <Typography color="text.secondary" sx={{ px: 2 }}>
+            {t("or")}
+          </Typography>
+          <Divider sx={{ flex: 1 }} />
+        </Box>
 
-      {/* Error message */}
-      {error && (
-        <Alert severity="error" className="mb-4">
-          {error}
-        </Alert>
-      )}
 
         {/* Social buttons */}
-        <Box className="flex gap-4">
-        <Button
-          variant="contained"
-          color="secondary"
-          fullWidth
-          onClick={signInWithGoogle}
-          disabled={isLoading.google || isLoading.facebook}
-          startIcon={<IconGoogle />}
-          className="justify-start"
-        >
-          {isLoading.google ? t("loading") : t("google")}
-        </Button>
+        <Box display="flex" gap={2}>
+          <Button
+            variant="contained"
+            color="secondary"
+            fullWidth
+            onClick={signInWithGoogle}
+            disabled={isLoading.google || isLoading.facebook}
+            startIcon={<IconGoogle />}
+            sx={{ justifyContent: 'flex-start' }}
+          >
+            {isLoading.google ? t("loading") : t("google")}
+          </Button>
 
-        <Button
-          variant="contained"
-          color="secondary"
-          fullWidth
-          onClick={signInWithFacebook}
-          disabled={isLoading.google || isLoading.facebook}
-          startIcon={<IconFacebook />}
-          className="justify-start"
-        >
-          {isLoading.facebook ? t("loading") : t("facebook")}
-        </Button>
-      </Box>
+          <Button
+            variant="contained"
+            color="secondary"
+            fullWidth
+            onClick={signInWithFacebook}
+            disabled={isLoading.google || isLoading.facebook}
+            startIcon={<IconFacebook />}
+            sx={{ justifyContent: 'flex-start' }}
+          >
+            {isLoading.facebook ? t("loading") : t("facebook")}
+          </Button>
+        </Box>
 
-      {/* Terms and policies */}
-      <Typography color="textSecondary" className="text-center">
-        {t("by_continuing")}{" "}
-        <Link href="/terms-and-policies" color="primary" className="cursor-pointer">
-          {t("terms_and_policies")}
-        </Link>
-      </Typography>
+        {/* Terms and policies */}
+        <Typography color="text.secondary" textAlign="center">
+          {t("by_continuing")}{" "}
+          <Link href="/terms-and-policies" color="primary" sx={{ cursor: 'pointer' }}>
+            {t("terms_and_policies")}
+          </Link>
+        </Typography>
+      </Stack>
     </Box>
   );
 }

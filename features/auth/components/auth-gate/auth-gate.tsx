@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { useAuthGate } from "../use-auth-gate";
+import { useAppSelector } from "@/lib/redux/hooks";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 
@@ -13,7 +13,8 @@ type AuthGateProps = {
 };
 
 export default function AuthGate({ requireAuth, fallback, children }: AuthGateProps) {
-  const { isAuthenticated, isLoading } = useAuthGate();
+  // Get state directly from Redux store
+  const { isAuthenticated, isLoading } = useAppSelector((state) => state.auth);
   const router = useRouter();
   const t = useTranslations();
 

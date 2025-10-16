@@ -1,63 +1,46 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Link, Button, Alert } from "@mui/material";
-import { useForgotPassword } from "./use-forgot-password";
-import FormInput from "@/components/ui/form-input";
+import { Link, Box } from "@mui/material";
+import { useForgotPassword } from "./forgot-password.hook";
+import Form from "@/components/ui/form";
+import { FORGOT_PASSWORD_FIELDS } from "./forgot-password.const";
 
 export function ForgotPassword() {
-  const t = useTranslations();
-  const { form, error, success, onSubmit } = useForgotPassword();
-  const { formState: { isSubmitting } } = form;
+    const t = useTranslations();
+    const { form, error, success, onSubmit } = useForgotPassword();
+    const { formState: { isSubmitting } } = form;
 
-  return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-      {/* Error Display */}
-      {error && (
-        <Alert severity="error" className="mb-4">
-          {error}
-        </Alert>
-      )}
+    return (
+        <Form error={error} success={success} onSubmit={form.handleSubmit(onSubmit)}>
+            <Form.Error />
+            <Form.Success />
+            
+            <Form.Fields 
+                form={form} 
+                fields={FORGOT_PASSWORD_FIELDS} 
+                translations={t} 
+            />
 
-      {/* Success Display */}
-      {success && (
-        <Alert severity="success" className="mb-4">
-          {success}
-        </Alert>
-      )}
+            <Form.Submit
+                isLoading={isSubmitting}
+                loadingText={t("loading")}
+                submitText={t("send_reset_email")}
+            />
 
-      {/* Email Field */}
-      <FormInput
-        name="email"
-        type="email"
-        label={t("email")}
-        placeholder={t("email")}
-        form={form}
-        required
-      />
-
-      {/* Submit Button */}
-      <Button
-        type="submit"
-        variant="contained"
-        fullWidth
-        disabled={isSubmitting}
-        className="mt-4"
-      >
-        {isSubmitting ? t("loading") : t("send_reset_email")}
-      </Button>
-
-      {/* Back to Sign In Link */}
-      <div className="text-center mt-4">
-        <Link
-          href="/sign-in"
-          className="cursor-pointer"
-        >
-          {t("back_to_sign_in")}
-        </Link>
-      </div>
-    </form>
-  );
+            {/* Back to Sign In Link */}
+            <Form.Content>
+                <Box textAlign="center" sx={{ mt: 2 }}>
+                    <Link
+                        href="/sign-in"
+                        sx={{ cursor: 'pointer' }}
+                    >
+                        {t("back_to_sign_in")}
+                    </Link>
+                </Box>
+            </Form.Content>
+        </Form>
+    );
 }
 
 export default ForgotPassword;

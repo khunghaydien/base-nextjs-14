@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { MuiProvider } from "@/mui/mui-provider";
-import { ReduxProvider } from "@/redux/provider";
+import { MuiProvider } from "@/lib/mui/mui-provider";
+import { ReduxProvider } from "@/lib/redux/provider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getLocale } from "next-intl/server";
 

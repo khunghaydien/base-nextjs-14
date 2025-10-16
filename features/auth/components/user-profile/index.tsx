@@ -1,16 +1,17 @@
 "use client";
 
-import { useAuthGate } from "../use-auth-gate";
-import { Box, Typography } from "@mui/material";
+import { useUserProfile } from "./user-profile.hook";
+import { Box, Typography, CircularProgress } from "@mui/material";
 import { useTranslations } from "next-intl";
 
 export default function UserProfile() {
-    const { user, isAuthenticated, isLoading, signOut } = useAuthGate();
+    const { user, isAuthenticated, isLoading, signOut } = useUserProfile();
     const t = useTranslations();
 
     if (isLoading) {
         return (
-            <Box className="flex items-center justify-center p-4">
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', p: 2 }}>
+                <CircularProgress size={20} sx={{ mr: 1 }} />
                 <Typography>{t("loading")}</Typography>
             </Box>
         );
@@ -19,7 +20,13 @@ export default function UserProfile() {
     if (!isAuthenticated) {
         return null;
     }
+    
     return (
-        <Typography onClick={signOut} className="cursor-pointer">{user?.name}</Typography>
+        <Typography 
+            onClick={signOut} 
+            sx={{ cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}
+        >
+            {user?.name}
+        </Typography>
     );
 }
