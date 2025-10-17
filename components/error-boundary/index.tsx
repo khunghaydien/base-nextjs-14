@@ -3,6 +3,7 @@
 import React from "react";
 import { Box, Button, Typography, Paper } from "@mui/material";
 import { ErrorBoundary as ReactErrorBoundary } from "react-error-boundary";
+import { useTranslations } from "next-intl";
 
 interface ErrorFallbackProps {
   error: Error;
@@ -10,15 +11,17 @@ interface ErrorFallbackProps {
 }
 
 function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
+  const t = useTranslations();
+
   return (
     <Box className="flex flex-col items-center justify-center min-h-[400px] p-4">
       <Paper elevation={3} className="p-4 max-w-[500px] text-center">
         <Typography variant="h4" className="text-error mb-2">
-          Oops! Something went wrong
+          {t("error_boundary_title")}
         </Typography>
 
         <Typography variant="body1" className="text-secondary mb-2">
-          We&apos;re sorry, but something unexpected happened. Please try again.
+          {t("error_boundary_message")}
         </Typography>
 
         {process.env.NODE_ENV === "development" && (
@@ -39,7 +42,7 @@ function ErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
           onClick={resetErrorBoundary}
           className="mt-2"
         >
-          Try Again
+          {t("try_again")}
         </Button>
       </Paper>
     </Box>

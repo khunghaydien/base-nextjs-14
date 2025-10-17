@@ -1,11 +1,7 @@
 "use client";
-import { useMounted } from "@/hooks/use-mounted";
-export default function DashboardPage() {
-  const mounted = useMounted();
+import { useTranslations } from "next-intl";
 
-  if (!mounted) {
-    console.log("DashboardPage not mounted");
-    return null;
-  }
-  return <div>Dashboard</div>;
+export default function DashboardPage() {
+  const t = useTranslations();
+  return <div>{t("dashboard")}</div>;
 }

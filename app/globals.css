@@ -31,6 +31,18 @@
     --chart-5: 27 87% 67%;
   }
 
+  body {
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "cv11", "ss01";
+    font-variation-settings: "opsz" 32;
+  }
+
+  code {
+    font-family:
+      var(--font-geist-mono), ui-monospace, SFMono-Regular, "SF Mono", Consolas,
+      "Liberation Mono", Menlo, monospace;
+  }
+
   .dark {
     --background: 20 14.3% 4.1%;
     --foreground: 60 9.1% 97.8%;

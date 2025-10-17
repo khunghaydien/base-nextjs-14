@@ -6,7 +6,7 @@ import { AuthService } from "@/services/auth.service";
  * Lấy base URL từ environment
  */
 function getBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_BACKEND_URL || "";
+  return process.env.NEXT_PUBLIC_API_BASE_URL || "";
 }
 
 /**
