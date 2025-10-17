@@ -7,12 +7,8 @@ import { IconFacebook, IconGoogle } from "@/components/icons";
 
 export function SocialSignIn() {
   const t = useTranslations();
-  const {
-    signInWithGoogle,
-    signInWithFacebook,
-    isLoading,
-    error
-  } = useSocialAuth();
+  const { signInWithGoogle, signInWithFacebook, isLoading, error } =
+    useSocialAuth();
 
   return (
     <Box>
@@ -26,7 +22,6 @@ export function SocialSignIn() {
           <Divider sx={{ flex: 1 }} />
         </Box>
 
-
         {/* Social buttons */}
         <Box display="flex" gap={2}>
           <Button
@@ -36,7 +31,7 @@ export function SocialSignIn() {
             onClick={signInWithGoogle}
             disabled={isLoading.google || isLoading.facebook}
             startIcon={<IconGoogle />}
-            sx={{ justifyContent: 'flex-start' }}
+            sx={{ justifyContent: "flex-start" }}
           >
             {isLoading.google ? t("loading") : t("google")}
           </Button>
@@ -48,7 +43,7 @@ export function SocialSignIn() {
             onClick={signInWithFacebook}
             disabled={isLoading.google || isLoading.facebook}
             startIcon={<IconFacebook />}
-            sx={{ justifyContent: 'flex-start' }}
+            sx={{ justifyContent: "flex-start" }}
           >
             {isLoading.facebook ? t("loading") : t("facebook")}
           </Button>
@@ -57,7 +52,11 @@ export function SocialSignIn() {
         {/* Terms and policies */}
         <Typography color="text.secondary" textAlign="center">
           {t("by_continuing")}{" "}
-          <Link href="/terms-and-policies" color="primary" sx={{ cursor: 'pointer' }}>
+          <Link
+            href="/terms-and-policies"
+            color="primary"
+            sx={{ cursor: "pointer" }}
+          >
             {t("terms_and_policies")}
           </Link>
         </Typography>

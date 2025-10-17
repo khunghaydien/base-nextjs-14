@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { AuthService } from '@/features/auth/auth.service';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { AuthService } from "@/features/auth/auth.service";
 
 // Types
 export type SocialProvider = "google" | "facebook";
@@ -19,33 +19,35 @@ const initialState: SocialSignInState = {
 
 // Async thunk for Google sign in
 export const signInWithGoogle = createAsyncThunk(
-  'socialSignIn/signInWithGoogle',
+  "socialSignIn/signInWithGoogle",
   async (_, { rejectWithValue }) => {
     try {
       const response = await AuthService.googleSignIn();
       return response;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to get Google auth URL');
+      return rejectWithValue(error.message || "Failed to get Google auth URL");
     }
-  }
+  },
 );
 
 // Async thunk for Facebook sign in
 export const signInWithFacebook = createAsyncThunk(
-  'socialSignIn/signInWithFacebook',
+  "socialSignIn/signInWithFacebook",
   async (_, { rejectWithValue }) => {
     try {
       const response = await AuthService.facebookSignIn();
       return response;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to get Facebook auth URL');
+      return rejectWithValue(
+        error.message || "Failed to get Facebook auth URL",
+      );
     }
-  }
+  },
 );
 
 // Slice
 const socialSignInSlice = createSlice({
-  name: 'socialSignIn',
+  name: "socialSignIn",
   initialState,
   reducers: {
     clearError: (state) => {
@@ -58,7 +60,10 @@ const socialSignInSlice = createSlice({
       state.error = null;
       state.authUrl = null;
     },
-    setLoading: (state, action: { payload: { provider: SocialProvider; loading: boolean } }) => {
+    setLoading: (
+      state,
+      action: { payload: { provider: SocialProvider; loading: boolean } },
+    ) => {
       state.isLoading[action.payload.provider] = action.payload.loading;
     },
   },
@@ -98,7 +103,8 @@ const socialSignInSlice = createSlice({
 });
 
 // Export actions
-export const { clearError, clearAuthUrl, clearAll, setLoading } = socialSignInSlice.actions;
+export const { clearError, clearAuthUrl, clearAll, setLoading } =
+  socialSignInSlice.actions;
 
 // Export reducer
 export default socialSignInSlice.reducer;

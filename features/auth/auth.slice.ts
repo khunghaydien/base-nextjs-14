@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { AuthService } from '@/features/auth/auth.service';
-import { signIn } from '@/features/auth/components/sign-in/sign-in.slice';
-import { signUp } from '@/features/auth/components/sign-up/sign-up.slice';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { AuthService } from "@/features/auth/auth.service";
+import { signIn } from "@/features/auth/components/sign-in/sign-in.slice";
+import { signUp } from "@/features/auth/components/sign-up/sign-up.slice";
 
 // Types
 export interface User {
@@ -28,7 +28,7 @@ const initialState: AuthState = {
 
 // Async thunk for getting current user
 export const getMe = createAsyncThunk(
-  'auth/getMe',
+  "auth/getMe",
   async (_, { rejectWithValue }) => {
     try {
       const response = await AuthService.getMe();
@@ -39,40 +39,40 @@ export const getMe = createAsyncThunk(
         image: response.data.id,
       };
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to get user info');
+      return rejectWithValue(error.message || "Failed to get user info");
     }
-  }
+  },
 );
 
 // Async thunk for sign out
 export const signOut = createAsyncThunk(
-  'auth/signOut',
+  "auth/signOut",
   async (_, { rejectWithValue }) => {
     try {
       await AuthService.signOut();
       return null;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to sign out');
+      return rejectWithValue(error.message || "Failed to sign out");
     }
-  }
+  },
 );
 
 // Async thunk for refresh token
 export const refreshToken = createAsyncThunk(
-  'auth/refreshToken',
+  "auth/refreshToken",
   async (_, { rejectWithValue }) => {
     try {
       const response = await AuthService.refreshToken();
       return response;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to refresh token');
+      return rejectWithValue(error.message || "Failed to refresh token");
     }
-  }
+  },
 );
 
 // Slice
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     clearError: (state) => {

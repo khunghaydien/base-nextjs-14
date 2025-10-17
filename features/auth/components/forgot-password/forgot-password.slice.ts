@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { AuthService } from '@/features/auth/auth.service';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { AuthService } from "@/features/auth/auth.service";
 
 // Types
 export interface ForgotPasswordData {
@@ -21,20 +21,20 @@ const initialState: ForgotPasswordState = {
 
 // Async thunk for forgot password
 export const forgotPassword = createAsyncThunk(
-  'forgotPassword/forgotPassword',
+  "forgotPassword/forgotPassword",
   async (email: string, { rejectWithValue }) => {
     try {
       const response = await AuthService.forgotPassword(email);
       return response;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to send reset email');
+      return rejectWithValue(error.message || "Failed to send reset email");
     }
-  }
+  },
 );
 
 // Slice
 const forgotPasswordSlice = createSlice({
-  name: 'forgotPassword',
+  name: "forgotPassword",
   initialState,
   reducers: {
     clearError: (state) => {
@@ -57,7 +57,7 @@ const forgotPasswordSlice = createSlice({
       })
       .addCase(forgotPassword.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.success = 'Reset email sent successfully';
+        state.success = "Reset email sent successfully";
         state.error = null;
       })
       .addCase(forgotPassword.rejected, (state, action) => {
@@ -69,7 +69,8 @@ const forgotPasswordSlice = createSlice({
 });
 
 // Export actions
-export const { clearError, clearSuccess, clearMessages } = forgotPasswordSlice.actions;
+export const { clearError, clearSuccess, clearMessages } =
+  forgotPasswordSlice.actions;
 
 // Export reducer
 export default forgotPasswordSlice.reducer;

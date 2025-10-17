@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { AuthService } from '@/features/auth/auth.service';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { AuthService } from "@/features/auth/auth.service";
 
 // Types
 export interface ChangePasswordData {
@@ -23,20 +23,23 @@ const initialState: ChangePasswordState = {
 
 // Async thunk for changing password
 export const changePassword = createAsyncThunk(
-  'changePassword/changePassword',
-  async (data: { currentPassword: string; newPassword: string }, { rejectWithValue }) => {
+  "changePassword/changePassword",
+  async (
+    data: { currentPassword: string; newPassword: string },
+    { rejectWithValue },
+  ) => {
     try {
       const response = await AuthService.changePassword(data);
       return response;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to change password');
+      return rejectWithValue(error.message || "Failed to change password");
     }
-  }
+  },
 );
 
 // Slice
 const changePasswordSlice = createSlice({
-  name: 'changePassword',
+  name: "changePassword",
   initialState,
   reducers: {
     clearError: (state) => {
@@ -60,7 +63,7 @@ const changePasswordSlice = createSlice({
       })
       .addCase(changePassword.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.success = 'Password changed successfully';
+        state.success = "Password changed successfully";
         state.error = null;
       })
       .addCase(changePassword.rejected, (state, action) => {
@@ -72,7 +75,8 @@ const changePasswordSlice = createSlice({
 });
 
 // Export actions
-export const { clearError, clearSuccess, clearMessages } = changePasswordSlice.actions;
+export const { clearError, clearSuccess, clearMessages } =
+  changePasswordSlice.actions;
 
 // Export reducer
 export default changePasswordSlice.reducer;

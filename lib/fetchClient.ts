@@ -1,4 +1,4 @@
-import { AuthService } from '../features/auth/auth.service';
+import { AuthService } from "../features/auth/auth.service";
 
 // ===== UTILITY FUNCTIONS =====
 
@@ -6,14 +6,14 @@ import { AuthService } from '../features/auth/auth.service';
  * Lấy base URL từ environment
  */
 function getBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_BACKEND_URL || '';
+  return process.env.NEXT_PUBLIC_BACKEND_URL || "";
 }
 
 /**
  * Lấy access token từ localStorage
  */
 function getAccessToken(): string | null {
-  return typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  return typeof window !== "undefined" ? localStorage.getItem("token") : null;
 }
 
 /**
@@ -21,7 +21,7 @@ function getAccessToken(): string | null {
  */
 function createBaseHeaders(options?: RequestInit): HeadersInit {
   return {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     ...(options?.headers as Record<string, string>),
   };
 }
@@ -40,12 +40,15 @@ function createAuthHeaders(options?: RequestInit): HeadersInit {
 /**
  * Thực hiện fetch request cơ bản
  */
-async function performFetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
+async function performFetch<T>(
+  endpoint: string,
+  options?: RequestInit,
+): Promise<T> {
   const baseUrl = getBaseUrl();
-  
+
   const response = await fetch(`${baseUrl}${endpoint}`, {
     ...options,
-    credentials: 'include',
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -65,28 +68,29 @@ async function retryRefreshToken(): Promise<boolean> {
 
   while (retryCount <= maxRetries) {
     try {
-      console.log(`Attempting to refresh token (attempt ${retryCount + 1}/${maxRetries + 1})`);
-      
+      console.log(
+        `Attempting to refresh token (attempt ${retryCount + 1}/${maxRetries + 1})`,
+      );
+
       await AuthService.refreshToken();
-      console.log('Token refreshed successfully');
+      console.log("Token refreshed successfully");
       return true;
-      
     } catch (error) {
       console.error(`Refresh token attempt ${retryCount + 1} failed:`, error);
-      
+
       if (retryCount < maxRetries) {
         // Delay trước khi retry (exponential backoff)
         const delay = Math.pow(2, retryCount) * 1000; // 1s, 2s, 4s
         console.log(`Retrying in ${delay}ms...`);
-        await new Promise(resolve => setTimeout(resolve, delay));
+        await new Promise((resolve) => setTimeout(resolve, delay));
         retryCount++;
       } else {
-        console.error('Max retries reached, refresh token failed');
+        console.error("Max retries reached, refresh token failed");
         return false;
       }
     }
   }
-  
+
   return false;
 }
 
@@ -94,21 +98,21 @@ async function retryRefreshToken(): Promise<boolean> {
  * Xử lý lỗi authentication và retry
  */
 async function handleAuthError<T>(
-  endpoint: string, 
-  options?: RequestInit
+  endpoint: string,
+  options?: RequestInit,
 ): Promise<T> {
-  console.log('Authentication error detected, attempting to refresh token...');
-  
+  console.log("Authentication error detected, attempting to refresh token...");
+
   const refreshSuccess = await retryRefreshToken();
-  
+
   if (refreshSuccess) {
     // Thử lại request với token mới
     const headers = createAuthHeaders(options);
-    
+
     const response = await fetch(`${getBaseUrl()}${endpoint}`, {
       ...options,
       headers,
-      credentials: 'include',
+      credentials: "include",
     });
 
     if (!response.ok) {
@@ -118,7 +122,7 @@ async function handleAuthError<T>(
 
     return (await response.json()) as T;
   } else {
-    throw new Error('Authentication failed: Unable to refresh token');
+    throw new Error("Authentication failed: Unable to refresh token");
   }
 }
 
@@ -130,7 +134,7 @@ async function handleAuthError<T>(
  */
 export async function publicFetchClient<T>(
   endpoint: string,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<T> {
   const headers = createBaseHeaders(options);
   return performFetch<T>(endpoint, { ...options, headers });
@@ -142,15 +146,15 @@ export async function publicFetchClient<T>(
  */
 export async function fetchClient<T>(
   endpoint: string,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<T> {
   const headers = createAuthHeaders(options);
-  
+
   try {
     return await performFetch<T>(endpoint, { ...options, headers });
   } catch (error: any) {
     // Kiểm tra nếu là lỗi authentication
-    if (error.message.includes('401') || error.message.includes('403')) {
+    if (error.message.includes("401") || error.message.includes("403")) {
       return handleAuthError<T>(endpoint, { ...options, headers });
     }
     throw error;

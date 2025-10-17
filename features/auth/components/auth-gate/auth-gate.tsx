@@ -12,7 +12,11 @@ type AuthGateProps = {
   children: React.ReactNode;
 };
 
-export default function AuthGate({ requireAuth, fallback, children }: AuthGateProps) {
+export default function AuthGate({
+  requireAuth,
+  fallback,
+  children,
+}: AuthGateProps) {
   // Get state directly from Redux store
   const { isAuthenticated, isLoading } = useAppSelector((state) => state.auth);
   const router = useRouter();
@@ -20,7 +24,14 @@ export default function AuthGate({ requireAuth, fallback, children }: AuthGatePr
 
   if (isLoading) {
     return (
-      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="200px" gap={2}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        minHeight="200px"
+        gap={2}
+      >
         <CircularProgress />
         <Typography color="textSecondary">{t("loading")}</Typography>
       </Box>
@@ -42,5 +53,3 @@ export default function AuthGate({ requireAuth, fallback, children }: AuthGatePr
 
   return <>{children}</>;
 }
-
-

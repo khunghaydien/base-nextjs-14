@@ -17,7 +17,7 @@ export interface SignUpData {
 export function useSignUp() {
   const t = useTranslations();
   const dispatch = useAppDispatch();
-  
+
   // Get state from Redux store
   const { isLoading, error } = useAppSelector((state) => state.signUp);
 
@@ -30,18 +30,20 @@ export function useSignUp() {
   const onSubmit = async (data: SignUpData) => {
     // Clear previous messages
     dispatch(clearAll());
-    
+
     // Dispatch the sign up thunk
-    const result = await dispatch(signUp({
-      email: data.email,
-      password: data.password,
-    }));
+    const result = await dispatch(
+      signUp({
+        email: data.email,
+        password: data.password,
+      }),
+    );
 
     // If successful, redirect
     if (signUp.fulfilled.match(result)) {
       // Get user data after successful sign-up
       await dispatch(getMe());
-      window.location.href = '/';
+      window.location.href = "/";
     }
   };
 

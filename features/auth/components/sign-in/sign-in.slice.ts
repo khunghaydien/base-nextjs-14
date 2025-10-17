@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { AuthService } from '@/features/auth/auth.service';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { AuthService } from "@/features/auth/auth.service";
 
 // Types
 export interface SignInData {
@@ -21,20 +21,20 @@ const initialState: SignInState = {
 
 // Async thunk for sign in
 export const signIn = createAsyncThunk(
-  'signIn/signIn',
+  "signIn/signIn",
   async (data: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await AuthService.signIn(data);
       return response;
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to sign in');
+      return rejectWithValue(error.message || "Failed to sign in");
     }
-  }
+  },
 );
 
 // Slice
 const signInSlice = createSlice({
-  name: 'signIn',
+  name: "signIn",
   initialState,
   reducers: {
     clearError: (state) => {

@@ -1,5 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { rootReducer } from './rootReducer';
+import { configureStore } from "@reduxjs/toolkit";
+import { rootReducer } from "./rootReducer";
 
 // Configure store
 export const store = configureStore({
@@ -8,7 +8,7 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         // Ignore these action types
-        ignoredActions: ['your/action/type'],
+        ignoredActions: ["your/action/type"],
       },
     }),
 });

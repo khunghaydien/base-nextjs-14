@@ -4,7 +4,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
-import { forgotPassword, clearError, clearSuccess, clearMessages } from "./forgot-password.slice";
+import {
+  forgotPassword,
+  clearError,
+  clearSuccess,
+  clearMessages,
+} from "./forgot-password.slice";
 import { createForgotPasswordSchema } from "./forgot-password.schema";
 
 export interface ForgotPasswordData {
@@ -14,9 +19,11 @@ export interface ForgotPasswordData {
 export function useForgotPassword() {
   const t = useTranslations();
   const dispatch = useAppDispatch();
-  
+
   // Get state from Redux store
-  const { isLoading, error, success } = useAppSelector((state) => state.forgotPassword);
+  const { isLoading, error, success } = useAppSelector(
+    (state) => state.forgotPassword,
+  );
 
   const schema = createForgotPasswordSchema(t);
 
@@ -27,7 +34,7 @@ export function useForgotPassword() {
   const onSubmit = async (data: ForgotPasswordData) => {
     // Clear previous messages
     dispatch(clearMessages());
-    
+
     // Dispatch the forgot password thunk
     const result = await dispatch(forgotPassword(data.email));
 

@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { createEmailSchema } from '@/features/auth/auth.schemas';
+import { createEmailSchema } from "@/features/auth/auth.schemas";
 
 export const createForgotPasswordSchema = (t: (key: string) => string) =>
-    z.object({
-        email: createEmailSchema(t),
-    });
+  z.object({
+    email: createEmailSchema(t),
+  });
