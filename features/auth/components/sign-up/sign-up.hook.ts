@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
-import { signUp, clearError, clearAll } from "./sign-up.slice";
-import { getMe } from "@/features/auth/auth.slice";
+import { signUp, clearError, clearAll } from "@/lib/redux/slices/sign-up.slice";
+import { getMe } from "@/lib/redux/slices/auth.slice";
 import { createSignUpSchema } from "./sign-up.schema";
 
 export interface SignUpData {

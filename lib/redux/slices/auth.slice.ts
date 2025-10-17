@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { AuthService } from "@/features/auth/auth.service";
-import { signIn } from "@/features/auth/components/sign-in/sign-in.slice";
-import { signUp } from "@/features/auth/components/sign-up/sign-up.slice";
+import { signIn } from "@/lib/redux/slices/sign-in.slice";
+import { signUp } from "@/lib/redux/slices/sign-up.slice";
+import { AuthService } from "@/services/auth.service";
 
 // Types
 export interface User {

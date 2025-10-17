@@ -1,12 +1,11 @@
 import { z } from "zod";
-import {
-  createEmailSchema,
-  createPasswordSchema,
-} from "@/features/auth/auth.schemas";
 
 export const createSignInSchema = (t: (key: string) => string) =>
   z.object({
-    email: createEmailSchema(t),
-    password: createPasswordSchema(t),
+    email: z.string().min(1, t("email_required")).email(t("invalid_email")),
+    password: z
+      .string()
+      .min(1, t("password_required"))
+      .min(6, t("password_min_length")),
     rememberMe: z.boolean().optional(),
   });

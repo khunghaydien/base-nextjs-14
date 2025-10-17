@@ -1,40 +1,40 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { AuthService } from "@/features/auth/auth.service";
+import { AuthService } from "@/services/auth.service";
 
 // Types
-export interface SignInData {
+export interface SignUpData {
   email: string;
   password: string;
-  rememberMe?: boolean;
+  confirmPassword: string;
 }
 
-export interface SignInState {
+export interface SignUpState {
   isLoading: boolean;
   error: string | null;
 }
 
 // Initial state
-const initialState: SignInState = {
+const initialState: SignUpState = {
   isLoading: false,
   error: null,
 };
 
-// Async thunk for sign in
-export const signIn = createAsyncThunk(
-  "signIn/signIn",
+// Async thunk for sign up
+export const signUp = createAsyncThunk(
+  "signUp/signUp",
   async (data: { email: string; password: string }, { rejectWithValue }) => {
     try {
-      const response = await AuthService.signIn(data);
+      const response = await AuthService.signUp(data);
       return response;
     } catch (error: any) {
-      return rejectWithValue(error.message || "Failed to sign in");
+      return rejectWithValue(error.message || "Failed to sign up");
     }
   },
 );
 
 // Slice
-const signInSlice = createSlice({
-  name: "signIn",
+const signUpSlice = createSlice({
+  name: "signUp",
   initialState,
   reducers: {
     clearError: (state) => {
@@ -46,15 +46,15 @@ const signInSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(signIn.pending, (state) => {
+      .addCase(signUp.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(signIn.fulfilled, (state) => {
+      .addCase(signUp.fulfilled, (state) => {
         state.isLoading = false;
         state.error = null;
       })
-      .addCase(signIn.rejected, (state, action) => {
+      .addCase(signUp.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });
@@ -62,7 +62,7 @@ const signInSlice = createSlice({
 });
 
 // Export actions
-export const { clearError, clearAll } = signInSlice.actions;
+export const { clearError, clearAll } = signUpSlice.actions;
 
 // Export reducer
-export default signInSlice.reducer;
+export default signUpSlice.reducer;

@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useSignUp } from "./sign-up.hook";
 import Form from "@/components/ui/form";
-import { SIGN_UP_FIELDS } from "./sign-up.const";
+import { SIGN_UP_FIELDS } from "@/consts/auth.const";
 
 export function SignUp() {
   const t = useTranslations();

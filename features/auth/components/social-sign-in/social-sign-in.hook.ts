@@ -7,7 +7,7 @@ import {
   clearError,
   clearAuthUrl,
   clearAll,
-} from "./social-sign-in.slice";
+} from "@/lib/redux/slices/social-sign-in.slice";
 
 export type SocialProvider = "google" | "facebook";
 

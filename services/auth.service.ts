@@ -1,4 +1,4 @@
-import { fetchClient, publicFetchClient } from "@/lib/fetchClient";
+import { publicFetchClient, fetchClient } from ".";
 
 // Authentication service functions
 export class AuthService {

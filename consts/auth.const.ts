@@ -1,4 +1,34 @@
-import { FormFieldConfig } from "./auth.types";
+// Shared form field configuration interface
+export interface FormFieldConfig {
+  name: string;
+  type: string;
+  labelKey: string;
+  placeholderKey: string;
+  required?: boolean;
+  options?: Array<{
+    value: string;
+    label: string;
+  }>;
+}
+
+// Common auth form data interfaces
+export interface BaseAuthData {
+  email: string;
+}
+
+export interface PasswordAuthData extends BaseAuthData {
+  password: string;
+}
+
+export interface ConfirmPasswordAuthData extends PasswordAuthData {
+  confirmPassword: string;
+}
+
+export interface ChangePasswordData {
+  currentPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}
 
 // Common form field configurations
 export const EMAIL_FIELD: FormFieldConfig = {
@@ -48,3 +78,19 @@ export const CONFIRM_NEW_PASSWORD_FIELD: FormFieldConfig = {
   placeholderKey: "confirm_new_password",
   required: true,
 };
+
+export const CHANGE_PASSWORD_FIELDS: FormFieldConfig[] = [
+  CURRENT_PASSWORD_FIELD,
+  NEW_PASSWORD_FIELD,
+  CONFIRM_NEW_PASSWORD_FIELD,
+];
+
+export const FORGOT_PASSWORD_FIELDS: FormFieldConfig[] = [EMAIL_FIELD];
+
+export const SIGN_IN_FIELDS: FormFieldConfig[] = [EMAIL_FIELD, PASSWORD_FIELD];
+
+export const SIGN_UP_FIELDS: FormFieldConfig[] = [
+  EMAIL_FIELD,
+  PASSWORD_FIELD,
+  CONFIRM_PASSWORD_FIELD,
+];

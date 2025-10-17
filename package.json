@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "node --disable-warning=ExperimentalWarning ./node_modules/.bin/next dev",
+    "dev:debug": "node --trace-warnings --inspect ./node_modules/.bin/next dev",
+    "build": "node --disable-warning=ExperimentalWarning ./node_modules/.bin/next build",
+    "start": "node --disable-warning=ExperimentalWarning ./node_modules/.bin/next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write .",

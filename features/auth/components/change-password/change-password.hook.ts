@@ -3,14 +3,13 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { z } from "zod";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import {
   changePassword,
   clearError,
   clearSuccess,
   clearMessages,
-} from "./change-password.slice";
+} from "@/lib/redux/slices/change-password.slice";
 import { createChangePasswordSchema } from "./change-password.schema";
 
 export interface ChangePasswordData {

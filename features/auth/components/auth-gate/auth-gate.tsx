@@ -24,16 +24,9 @@ export default function AuthGate({
 
   if (isLoading) {
     return (
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        minHeight="200px"
-        gap={2}
-      >
+      <Box className="flex flex-col items-center justify-center min-h-[200px] gap-2">
         <CircularProgress />
-        <Typography color="textSecondary">{t("loading")}</Typography>
+        <Typography className="text-secondary">{t("loading")}</Typography>
       </Box>
     );
   }

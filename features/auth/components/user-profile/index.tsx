@@ -10,15 +10,8 @@ export default function UserProfile() {
 
   if (isLoading) {
     return (
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          p: 2,
-        }}
-      >
-        <CircularProgress size={20} sx={{ mr: 1 }} />
+      <Box className="flex items-center justify-center p-2">
+        <CircularProgress size={20} className="mr-1" />
         <Typography>{t("loading")}</Typography>
       </Box>
     );
@@ -29,10 +22,7 @@ export default function UserProfile() {
   }
 
   return (
-    <Typography
-      onClick={signOut}
-      sx={{ cursor: "pointer", "&:hover": { textDecoration: "underline" } }}
-    >
+    <Typography onClick={signOut} className="cursor-pointer hover:underline">
       {user?.name}
     </Typography>
   );

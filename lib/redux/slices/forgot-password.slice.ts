@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { AuthService } from "@/features/auth/auth.service";
+import { AuthService } from "@/services/auth.service";
 
 // Types
 export interface ForgotPasswordData {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
-import { signOut } from "@/features/auth/auth.slice";
+import { signOut } from "@/lib/redux/slices/auth.slice";
 
 export function useUserProfile() {
   const dispatch = useAppDispatch();

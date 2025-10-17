@@ -9,7 +9,7 @@ import {
   clearError,
   clearSuccess,
   clearMessages,
-} from "./forgot-password.slice";
+} from "@/lib/redux/slices/forgot-password.slice";
 import { createForgotPasswordSchema } from "./forgot-password.schema";
 
 export interface ForgotPasswordData {

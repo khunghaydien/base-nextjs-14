@@ -14,16 +14,16 @@ export function SocialSignIn() {
     <Box>
       <Stack spacing={3}>
         {/* Divider */}
-        <Box display="flex" alignItems="center" gap={2}>
-          <Divider sx={{ flex: 1 }} />
-          <Typography color="text.secondary" sx={{ px: 2 }}>
+        <Box className="flex items-center gap-2">
+          <Divider className="flex-1" />
+          <Typography color="text.secondary" className="px-2">
             {t("or")}
           </Typography>
-          <Divider sx={{ flex: 1 }} />
+          <Divider className="flex-1" />
         </Box>
 
         {/* Social buttons */}
-        <Box display="flex" gap={2}>
+        <Box className="flex gap-2">
           <Button
             variant="contained"
             color="secondary"
@@ -31,7 +31,7 @@ export function SocialSignIn() {
             onClick={signInWithGoogle}
             disabled={isLoading.google || isLoading.facebook}
             startIcon={<IconGoogle />}
-            sx={{ justifyContent: "flex-start" }}
+            className="justify-start"
           >
             {isLoading.google ? t("loading") : t("google")}
           </Button>
@@ -43,7 +43,7 @@ export function SocialSignIn() {
             onClick={signInWithFacebook}
             disabled={isLoading.google || isLoading.facebook}
             startIcon={<IconFacebook />}
-            sx={{ justifyContent: "flex-start" }}
+            className="justify-start"
           >
             {isLoading.facebook ? t("loading") : t("facebook")}
           </Button>
@@ -51,11 +51,11 @@ export function SocialSignIn() {
 
         {/* Terms and policies */}
         <Typography color="text.secondary" textAlign="center">
-          {t("by_continuing")}{" "}
+          {t("by_continuing")}
           <Link
             href="/terms-and-policies"
             color="primary"
-            sx={{ cursor: "pointer" }}
+            className="cursor-pointer"
           >
             {t("terms_and_policies")}
           </Link>

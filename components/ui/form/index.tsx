@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from "react";
 import { Box, Stack, Alert, Button } from "@mui/material";
-import FormInput from "@/components/ui/input";
+import FormInput from "@/components/ui/form/form-input";
 
 // Context for form state
 interface FormContextType {
@@ -110,7 +110,7 @@ const FormSubmit: React.FC<{
       variant="contained"
       fullWidth
       disabled={isLoading || disabled}
-      sx={{ mt: 2 }}
+      className="mt-2"
     >
       {isLoading ? loadingText : submitText}
     </Button>

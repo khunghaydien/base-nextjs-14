@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { Link, Box } from "@mui/material";
 import { useForgotPassword } from "./forgot-password.hook";
 import Form from "@/components/ui/form";
-import { FORGOT_PASSWORD_FIELDS } from "./forgot-password.const";
+import { FORGOT_PASSWORD_FIELDS } from "@/consts/auth.const";
 
 export function ForgotPassword() {
   const t = useTranslations();
@@ -36,8 +36,8 @@ export function ForgotPassword() {
 
       {/* Back to Sign In Link */}
       <Form.Content>
-        <Box textAlign="center" sx={{ mt: 2 }}>
-          <Link href="/sign-in" sx={{ cursor: "pointer" }}>
+        <Box className="text-center mt-2">
+          <Link href="/sign-in" className="cursor-pointer">
             {t("back_to_sign_in")}
           </Link>
         </Box>

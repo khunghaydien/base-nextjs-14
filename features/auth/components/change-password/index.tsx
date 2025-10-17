@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useChangePassword } from "./change-password.hook";
 import Form from "@/components/ui/form";
-import { CHANGE_PASSWORD_FIELDS } from "./change-password.const";
+import { CHANGE_PASSWORD_FIELDS } from "@/consts/auth.const";
 
 export function ChangePassword() {
   const t = useTranslations();

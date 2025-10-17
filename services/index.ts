@@ -1,4 +1,4 @@
-import { AuthService } from "../features/auth/auth.service";
+import { AuthService } from "@/services/auth.service";
 
 // ===== UTILITY FUNCTIONS =====
 
