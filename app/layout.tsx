@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { MuiProvider } from "@/lib/mui/mui-provider";
+import { MuiProvider } from "@/lib/mui-provider";
 import { ReduxProvider } from "@/lib/redux/provider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getLocale } from "next-intl/server";
+import ErrorBoundary from "@/components/error-boundary";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,18 +35,20 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ReduxProvider>
-          <MuiProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <NextIntlClientProvider messages={messages} locale={locale}>
-              {children}
-            </NextIntlClientProvider>
-          </MuiProvider>
-        </ReduxProvider>
+        <ErrorBoundary>
+          <ReduxProvider>
+            <MuiProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <NextIntlClientProvider messages={messages} locale={locale}>
+                {children}
+              </NextIntlClientProvider>
+            </MuiProvider>
+          </ReduxProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

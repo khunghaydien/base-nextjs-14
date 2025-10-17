@@ -19,4 +19,4 @@ export default function IconClock({ ...props }: React.SVGProps<SVGSVGElement>) {
       <polyline points="12,6 12,12 16,14" />
     </svg>
   );
-} 
+}

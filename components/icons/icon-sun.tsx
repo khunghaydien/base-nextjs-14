@@ -26,4 +26,4 @@ export default function IconSun({ ...props }: React.SVGProps<SVGSVGElement>) {
       <path d="m19.07 4.93-1.41 1.41" />
     </svg>
   );
-} 
+}

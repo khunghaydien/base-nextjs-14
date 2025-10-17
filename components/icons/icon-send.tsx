@@ -19,4 +19,4 @@ export default function IconSend({ ...props }: React.SVGProps<SVGSVGElement>) {
       <path d="M22 2 11 13" />
     </svg>
   );
-} 
+}

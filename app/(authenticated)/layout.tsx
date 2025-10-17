@@ -4,9 +4,9 @@ import SignIn from "@/features/auth/components/sign-in";
 import UserProfile from "@/features/auth/components/user-profile";
 import { useMounted } from "@/hooks/use-mounted";
 export default function AuthenticatedLayout({
-  children
+  children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   const mounted = useMounted();
 
@@ -16,7 +16,7 @@ export default function AuthenticatedLayout({
   }
   return (
     <AuthGate requireAuth fallback={<SignIn />}>
-      <UserProfile /> 
+      <UserProfile />
       {children}
     </AuthGate>
   );

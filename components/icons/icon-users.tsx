@@ -21,4 +21,4 @@ export default function IconUsers({ ...props }: React.SVGProps<SVGSVGElement>) {
       <circle cx="16" cy="7" r="3" />
     </svg>
   );
-} 
+}

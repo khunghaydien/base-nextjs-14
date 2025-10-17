@@ -2,9 +2,9 @@
 import AuthGate from "@/features/auth/components/auth-gate/auth-gate";
 import { useMounted } from "@/hooks/use-mounted";
 export default function UnauthenticatedLayout({
-  children
+  children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   const mounted = useMounted();
 
@@ -12,7 +12,5 @@ export default function UnauthenticatedLayout({
     console.log("UnauthenticatedLayout not mounted");
     return null;
   }
-  return (
-    <AuthGate requireAuth={false}>{children}</AuthGate>
-  );
+  return <AuthGate requireAuth={false}>{children}</AuthGate>;
 }

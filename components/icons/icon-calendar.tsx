@@ -1,6 +1,8 @@
 import clsx from "clsx";
 
-export default function IconCalendar({ ...props }: React.SVGProps<SVGSVGElement>) {
+export default function IconCalendar({
+  ...props
+}: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -21,4 +23,4 @@ export default function IconCalendar({ ...props }: React.SVGProps<SVGSVGElement>
       <path d="M3 10h18" />
     </svg>
   );
-} 
+}
