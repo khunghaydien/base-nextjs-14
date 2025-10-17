@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { Box, Stack, Alert, Button } from '@mui/material';
+import { Form as AntForm, Alert, Button, Space } from 'antd';
 import FormInput from '@/components/ui/input';
 
 // Context for form state
@@ -43,11 +43,18 @@ const Form: React.FC<FormProps> & {
 
     return (
         <FormContext.Provider value={contextValue}>
-            <Box component="form" onSubmit={onSubmit}>
-                <Stack spacing={3}>
+            <AntForm
+                layout="vertical"
+                onFinish={(values) => {
+                    const event = new Event('submit') as any;
+                    event.preventDefault = () => {};
+                    onSubmit(event);
+                }}
+            >
+                <Space direction="vertical" size="large" style={{ width: '100%' }}>
                     {children}
-                </Stack>
-            </Box>
+                </Space>
+            </AntForm>
         </FormContext.Provider>
     );
 };
@@ -59,9 +66,11 @@ const FormError: React.FC = () => {
     if (!error) return null;
 
     return (
-        <Alert severity="error">
-            {error}
-        </Alert>
+        <Alert
+            message={error}
+            type="error"
+            showIcon
+        />
     );
 };
 
@@ -72,9 +81,11 @@ const FormSuccess: React.FC = () => {
     if (!success) return null;
 
     return (
-        <Alert severity="success">
-            {success}
-        </Alert>
+        <Alert
+            message={success}
+            type="success"
+            showIcon
+        />
     );
 };
 
@@ -116,11 +127,12 @@ const FormSubmit: React.FC<{
 }> = ({ isLoading, loadingText, submitText, disabled = false }) => {
     return (
         <Button
-            type="submit"
-            variant="contained"
-            fullWidth
-            disabled={isLoading || disabled}
-            sx={{ mt: 2 }}
+            type="primary"
+            htmlType="submit"
+            block
+            loading={isLoading}
+            disabled={disabled}
+            style={{ marginTop: 16 }}
         >
             {isLoading ? loadingText : submitText}
         </Button>

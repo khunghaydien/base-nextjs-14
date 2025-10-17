@@ -10,7 +10,7 @@ const FormInput: React.FC<FormInputProps> = (props) => {
 
     // Get the static renderer for this input type
     const renderInput = inputRenderers[type];
-    const inputElement = renderInput({ props, register: register(name) });
+    const inputElement = renderInput({ props, register: register(name), error });
 
     return (
         <FormInputWrapper

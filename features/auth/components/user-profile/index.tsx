@@ -26,7 +26,7 @@ export default function UserProfile() {
             onClick={signOut} 
             sx={{ cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}
         >
-            {user?.name}
+            {user?.first_name || user?.email}
         </Typography>
     );
 }

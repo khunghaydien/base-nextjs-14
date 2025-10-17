@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { MuiProvider } from "@/lib/mui/mui-provider";
-import { ReduxProvider } from "@/lib/redux/provider";
+import { AntdProvider } from "@/lib/antd/antd-provider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getLocale } from "next-intl/server";
 
@@ -34,18 +33,16 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ReduxProvider>
-          <MuiProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <NextIntlClientProvider messages={messages} locale={locale}>
-              {children}
-            </NextIntlClientProvider>
-          </MuiProvider>
-        </ReduxProvider>
+        <AntdProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextIntlClientProvider messages={messages} locale={locale}>
+            {children}
+          </NextIntlClientProvider>
+        </AntdProvider>
       </body>
     </html>
   );

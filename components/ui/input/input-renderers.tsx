@@ -1,29 +1,26 @@
 import React from 'react';
 import {
-    TextField,
+    Input,
     Select,
-    MenuItem,
     Checkbox,
-    FormControlLabel,
-    FormControl,
-    InputLabel,
-    OutlinedInput,
-    Chip,
-    Box
-} from '@mui/material';
+    DatePicker,
+    InputNumber,
+    Typography
+} from 'antd';
 import { FormInputProps } from './types';
 
-// Shared TextField renderer for all TextField-based inputs
-const createTextField = (inputType: string, extraProps?: any) => 
-    (props: FormInputProps, register: any, error?: string) => (
-        <TextField
+const { TextArea } = Input;
+const { Option } = Select;
+const { Text } = Typography;
+
+// Shared Input renderer for all Input-based inputs
+const createInput = (inputType: string, extraProps?: any) => 
+    ({ props, register, error }: { props: FormInputProps; register: any; error?: string }) => (
+        <Input
             type={inputType}
             placeholder={props.placeholder}
             disabled={props.disabled}
-            fullWidth
-            variant="outlined"
-            error={!!error}
-            helperText={error}
+            status={error ? 'error' : ''}
             {...extraProps}
             {...register}
         />
@@ -31,82 +28,96 @@ const createTextField = (inputType: string, extraProps?: any) =>
 
 // Select input renderer
 const SelectInput: React.FC<{ props: FormInputProps; register: any; error?: string }> = ({ props, register, error }) => (
-    <FormControl fullWidth variant="outlined">
-        <InputLabel>{props.label}</InputLabel>
-        <Select
-            disabled={props.disabled}
-            label={props.label}
-            {...register}
-        >
-            {props.options?.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                </MenuItem>
-            ))}
-        </Select>
-    </FormControl>
+    <Select
+        placeholder={props.placeholder}
+        disabled={props.disabled}
+        status={error ? 'error' : ''}
+        {...register}
+    >
+        {props.options?.map((option) => (
+            <Option key={option.value} value={option.value}>
+                {option.label}
+            </Option>
+        ))}
+    </Select>
 );
 
 // Multi-select input renderer
 const MultiSelectInput: React.FC<{ props: FormInputProps; register: any; error?: string }> = ({ props, register, error }) => (
-    <FormControl fullWidth variant="outlined">
-        <InputLabel>{props.label}</InputLabel>
-        <Select
-            multiple
-            disabled={props.disabled}
-            label={props.label}
-            input={<OutlinedInput label={props.label} />}
-            renderValue={(selected) => (
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    {(selected as string[]).map((value) => {
-                        const option = props.options?.find(opt => opt.value === value);
-                        return <Chip key={value} label={option?.label || value} size="small" />;
-                    })}
-                </Box>
-            )}
-            {...register}
-        >
-            {props.options?.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                </MenuItem>
-            ))}
-        </Select>
-    </FormControl>
+    <Select
+        mode="multiple"
+        placeholder={props.placeholder}
+        disabled={props.disabled}
+        status={error ? 'error' : ''}
+        {...register}
+    >
+        {props.options?.map((option) => (
+            <Option key={option.value} value={option.value}>
+                {option.label}
+            </Option>
+        ))}
+    </Select>
 );
 
 // Checkbox input renderer
 const CheckboxInput: React.FC<{ props: FormInputProps; register: any; error?: string }> = ({ props, register, error }) => (
-    <FormControlLabel
-        control={
-            <Checkbox
-                size={props.size}
-                color={props.color}
-                disabled={props.disabled}
-                {...register}
-            />
-        }
-        label={props.label}
-        labelPlacement={props.labelPlacement}
-    />
+    <div>
+        <Checkbox
+            disabled={props.disabled}
+            {...register}
+        >
+            {props.label}
+        </Checkbox>
+        {error && (
+            <Text type="danger" style={{ fontSize: '12px', marginTop: 4, display: 'block' }}>
+                {error}
+            </Text>
+        )}
+    </div>
 );
 
 // Textarea input renderer
-const TextareaInput: React.FC<{ props: FormInputProps; register: any; error?: string }> = ({ props, register, error }) =>
-    createTextField('text', {
-        multiline: true,
-        rows: props.rows || 4
-    })(props, register, error);
+const TextareaInput: React.FC<{ props: FormInputProps; register: any; error?: string }> = ({ props, register, error }) => (
+    <TextArea
+        placeholder={props.placeholder}
+        disabled={props.disabled}
+        rows={props.rows || 4}
+        status={error ? 'error' : ''}
+        {...register}
+    />
+);
+
+// Number input renderer
+const NumberInput: React.FC<{ props: FormInputProps; register: any; error?: string }> = ({ props, register, error }) => (
+    <InputNumber
+        placeholder={props.placeholder}
+        disabled={props.disabled}
+        status={error ? 'error' : ''}
+        style={{ width: '100%' }}
+        {...register}
+    />
+);
+
+// Date input renderer
+const DateInput: React.FC<{ props: FormInputProps; register: any; error?: string }> = ({ props, register, error }) => (
+    <DatePicker
+        placeholder={props.placeholder}
+        disabled={props.disabled}
+        status={error ? 'error' : ''}
+        style={{ width: '100%' }}
+        {...register}
+    />
+);
 
 // Static input renderers object - no recreation on each render
 export const inputRenderers = {
-    text: (props: any) => createTextField('text')(props.props, props.register, props.error),
-    email: (props: any) => createTextField('email')(props.props, props.register, props.error),
-    password: (props: any) => createTextField('password')(props.props, props.register, props.error),
-    number: (props: any) => createTextField('number')(props.props, props.register, props.error),
-    tel: (props: any) => createTextField('tel')(props.props, props.register, props.error),
-    date: (props: any) => createTextField('date', { InputLabelProps: { shrink: true } })(props.props, props.register, props.error),
-    'datetime-local': (props: any) => createTextField('datetime-local', { InputLabelProps: { shrink: true } })(props.props, props.register, props.error),
+    text: createInput('text'),
+    email: createInput('email'),
+    password: createInput('password'),
+    number: NumberInput,
+    tel: createInput('tel'),
+    date: DateInput,
+    'datetime-local': DateInput,
     textarea: TextareaInput,
     select: SelectInput,
     multiselect: MultiSelectInput,

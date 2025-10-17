@@ -1,5 +1,8 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Form, Typography } from 'antd';
+
+const { Item } = Form;
+const { Text } = Typography;
 
 interface FormInputWrapperProps {
     label?: string;
@@ -20,50 +23,29 @@ export const FormInputWrapper: React.FC<FormInputWrapperProps> = ({
 }) => {
     const hasError = !!error;
 
+    // For checkbox inputs, don't wrap in Form.Item
+    if (type === 'checkbox') {
+        return (
+            <div className={className}>
+                {children}
+                {hasError && (
+                    <Text type="danger" style={{ fontSize: '12px', marginTop: 4, display: 'block' }}>
+                        {error}
+                    </Text>
+                )}
+            </div>
+        );
+    }
+
     return (
-        <Box sx={{ position: 'relative', flex: 1, ...(className && { className }) }}>
-            {/* Label */}
-            {label && type !== 'checkbox' && (
-                <Typography 
-                    variant="body2" 
-                    component="label" 
-                    sx={{ 
-                        display: 'block', 
-                        fontWeight: 500, 
-                        mb: 1,
-                        color: 'text.primary'
-                    }}
-                >
-                    {label}
-                    {required && (
-                        <Typography 
-                            component="span" 
-                            sx={{ color: 'error.main', ml: 0.5 }}
-                        >
-                            *
-                        </Typography>
-                    )}
-                </Typography>
-            )}
-
-            {/* Input Component */}
+        <Item
+            label={label}
+            required={required}
+            validateStatus={hasError ? 'error' : ''}
+            help={error}
+            className={className}
+        >
             {children}
-
-            {/* Error Message */}
-            {hasError && (
-                <Typography 
-                    variant="caption" 
-                    sx={{ 
-                        color: 'error.main',
-                        position: 'absolute',
-                        bottom: -20,
-                        left: 0,
-                        fontSize: '0.75rem'
-                    }}
-                >
-                    {error}
-                </Typography>
-            )}
-        </Box>
+        </Item>
     );
 };

@@ -1,6 +1,6 @@
 "use client";
 import AuthGate from "@/features/auth/components/auth-gate/auth-gate";
-import { useMounted } from "@/hooks/use-mounted";
+import { useMounted } from "@/hooks/mounted.hook";
 export default function UnauthenticatedLayout({
   children
 }: {
@@ -13,6 +13,8 @@ export default function UnauthenticatedLayout({
     return null;
   }
   return (
-    <AuthGate requireAuth={false}>{children}</AuthGate>
+    <AuthGate requireAuth={false}>
+      {children}
+    </AuthGate>
   );
 }

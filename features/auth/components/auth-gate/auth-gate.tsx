@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAppSelector } from "@/lib/redux/hooks";
+import { retrieveCustomer } from "@/lib/data/customer";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { HttpTypes } from "@medusajs/types";
 
 type AuthGateProps = {
   requireAuth: boolean;
@@ -13,10 +14,31 @@ type AuthGateProps = {
 };
 
 export default function AuthGate({ requireAuth, fallback, children }: AuthGateProps) {
-  // Get state directly from Redux store
-  const { isAuthenticated, isLoading } = useAppSelector((state) => state.auth);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<HttpTypes.StoreCustomer | null>(null);
+  
   const router = useRouter();
   const t = useTranslations();
+
+  // Check authentication status
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const customer = await retrieveCustomer();
+        if (customer) {
+          setUser(customer);
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        console.error('Auth check failed:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
 
   if (isLoading) {
     return (
@@ -36,11 +58,9 @@ export default function AuthGate({ requireAuth, fallback, children }: AuthGatePr
 
   // Guest-only: if user is authenticated, redirect to dashboard
   if (isAuthenticated) {
-    router.push("/dashboard");
+    router.push("/");
     return null;
   }
 
   return <>{children}</>;
 }
-
-
