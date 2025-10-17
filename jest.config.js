@@ -18,6 +18,7 @@ const customJestConfig = {
     "!**/node_modules/**",
   ],
   testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"],
+  passWithNoTests: true,
 };
 
 module.exports = createJestConfig(customJestConfig);
